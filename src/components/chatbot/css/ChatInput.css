@@ -1,0 +1,55 @@
+/* ChatInput.css
+   - Thanh nhập tin nhắn ở cuối hộp chat
+   - Bao gồm input text và nút gửi
+*/
+
+.modern-chatbot-input-form {
+  padding: 12px 15px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #eeeeee;
+}
+
+.modern-chatbot-input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+}
+
+.modern-chatbot-input:focus {
+  border-color: #e7ab3c;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(231, 171, 60, 0.15);
+}
+
+.modern-chatbot-send-btn {
+  background: #e7ab3c;
+  color: #ffffff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.modern-chatbot-send-btn:hover:not(:disabled) {
+  background: #d69a2e;
+  transform: scale(1.05);
+}
+
+.modern-chatbot-send-btn:disabled {
+  background: #cbd5e1;
+}

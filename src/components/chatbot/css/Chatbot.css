@@ -1,0 +1,403 @@
+/* =======================================================
+   1. NÚT BẤM MỞ CHATBOT (FIXED TRÊN MÀN HÌNH)
+   ======================================================= */
+.modern-chatbot-toggle {
+  position: fixed !important;
+  bottom: 25px !important;
+  right: 25px !important;
+  z-index: 999999 !important;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e7ab3c 0%, #f4c267 100%); /* Màu cam vàng đồng bộ Fashi */
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 4px 16px rgba(231, 171, 60, 0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modern-chatbot-toggle:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(231, 171, 60, 0.6);
+}
+
+/* Hiệu ứng sóng mạch đập lan tỏa quanh nút bấm */
+.toggle-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(231, 171, 60, 0.4);
+  animation: chatbotPulse 2s infinite;
+  z-index: -1;
+}
+
+@keyframes chatbotPulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+
+/* =======================================================
+   2. KHUNG CONTAINER HỘP CHAT 
+   ======================================================= */
+.modern-chatbot-container {
+  position: fixed !important;
+  bottom: 95px !important;
+  right: 25px !important;
+  z-index: 999999 !important;
+  width: 380px;
+  height: 520px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  animation: chatbotSlideUp 0.3s ease;
+}
+
+@keyframes chatbotSlideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* =======================================================
+   3. THANH HEADER CỦA CHATBOX
+   ======================================================= */
+.modern-chatbot-header {
+  padding: 15px 20px;
+  background: #111111; /* Đen sang trọng tiệp màu thanh menu Fashi */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #222222;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background: #e7ab3c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.online-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #26de81;
+  border: 2px solid #111111;
+  border-radius: 50%;
+}
+
+.title-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-text .name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.title-text .status {
+  font-size: 11px;
+  color: #aaaaaa;
+}
+
+.modern-chatbot-close-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.modern-chatbot-close-btn:hover {
+  opacity: 1;
+}
+
+/* =======================================================
+   4. VÙNG NỘI DUNG HIỂN THỊ TIN NHẮN
+   ======================================================= */
+.modern-chatbot-messages {
+  flex: 1;
+  padding: 20px 15px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Thanh cuộn dọc cho khung tin nhắn */
+.modern-chatbot-messages::-webkit-scrollbar {
+  width: 5px;
+}
+.modern-chatbot-messages::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+/* Hàng tin nhắn chung */
+.modern-message-row {
+  display: flex;
+  gap: 10px;
+  max-width: 85%;
+  width: max-content;
+}
+
+/* Phân loại lề tin nhắn User và Bot */
+.modern-message-row.bot {
+  align-self: flex-start;
+}
+
+.modern-message-row.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+
+/* Avatar nhỏ của Bot trong hội thoại */
+.bot-msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #666666;
+  flex-shrink: 0;
+}
+
+/* Bong bóng hội thoại chat */
+.modern-message-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.modern-message-row.bot .modern-message-bubble {
+  background: #ffffff;
+  color: #333333;
+  border-top-left-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  border: 1px solid #ebebeb;
+}
+
+.modern-message-row.user .modern-message-bubble {
+  background: #e7ab3c;
+  color: #ffffff;
+  border-top-right-radius: 2px;
+  box-shadow: 0 2px 6px rgba(231, 171, 60, 0.2);
+}
+
+/* =======================================================
+   5. HIỆU ỨNG BA DẤU CHẤM NHẢY (AI LOADING)
+   ======================================================= */
+.loading-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 18px !important;
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  background: #e7ab3c;
+  border-radius: 50%;
+  animation: chatbotBounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes chatbotBounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+}
+
+/* =======================================================
+   6. CẤU TRÚC PHẦN CUỘN NGANG CAROUSEL SẢN PHẨM 
+   ======================================================= */
+.chatbot-products-carousel {
+  display: flex !important;
+  gap: 12px !important;
+  overflow-x: auto !important;
+  padding: 8px 10px 12px 42px !important; /* Thụt lề căn thẳng hàng chữ Bot */
+  scroll-behavior: smooth;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Thanh cuộn ngang tinh tế của Carousel */
+.chatbot-products-carousel::-webkit-scrollbar {
+  height: 4px;
+}
+.chatbot-products-carousel::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+/* Thẻ Card sản phẩm */
+.chatbot-product-card {
+  flex: 0 0 135px !important;
+  background: #ffffff !important;
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+  color: #333333 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.chatbot-product-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.1) !important;
+  color: #111111 !important;
+}
+
+/* Vòng bọc ảnh */
+.product-card-img-wrapper {
+  width: 100% !important;
+  height: 110px !important;
+  background-color: #f9f9f9 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border-bottom: 1px solid #f2f2f2 !important;
+}
+
+.product-card-img-wrapper img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Thông tin text của Card */
+.product-card-info {
+  padding: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  flex-grow: 1 !important;
+}
+
+.product-card-name {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  height: 30px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  color: #333333 !important;
+}
+
+.product-card-price {
+  font-size: 11px !important;
+  color: #ff4d4f;
+  font-weight: 700 !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+.product-card-action {
+  font-size: 10px !important;
+  color: #e7ab3c !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-top: 1px dashed #ededed !important;
+  padding-top: 5px !important;
+}
+
+/* =======================================================
+   7. FORM Ô NHẬP LIỆU PHÍA DƯỚI ĐÁY KHUNG CHAT
+   ======================================================= */
+.modern-chatbot-input-form {
+  padding: 12px 15px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #eeeeee;
+}
+
+.modern-chatbot-input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+}
+
+.modern-chatbot-input:focus {
+  border-color: #e7ab3c;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(231, 171, 60, 0.15);
+}
+
+.modern-chatbot-send-btn {
+  background: #e7ab3c;
+  color: #ffffff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.modern-chatbot-send-btn:hover:not(:disabled) {
+  background: #d69a2e;
+  transform: scale(1.05);
+}
+
+.modern-chatbot-send-btn:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+}

@@ -1,0 +1,227 @@
+/* MessageList.css
+   - Vùng hiển thị các tin nhắn
+   - Chia phần bot/user, bong bóng chat, loading animation và carousel sản phẩm
+*/
+
+/* Container chính cho danh sách tin nhắn */
+.modern-chatbot-messages {
+  flex: 1;
+  padding: 20px 15px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Thanh cuộn dọc cho vùng tin nhắn */
+.modern-chatbot-messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Thumb cho thanh cuộn dọc */
+.modern-chatbot-messages::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+/* Hàng tin nhắn chung */
+.modern-message-row {
+  display: flex;
+  gap: 10px;
+  max-width: 85%;
+  width: max-content;
+}
+
+/* Căn lề tin nhắn bot bên trái */
+.modern-message-row.bot {
+  align-self: flex-start;
+}
+
+/* Căn lề tin nhắn user bên phải */
+.modern-message-row.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+
+/* Avatar nhỏ hiển thị bên cạnh tin nhắn bot */
+.bot-msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #666666;
+  flex-shrink: 0;
+}
+
+/* Bong bóng tin nhắn chung */
+.modern-message-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Kiểu bong bóng cho tin nhắn bot */
+.modern-message-row.bot .modern-message-bubble {
+  background: #ffffff;
+  color: #333333;
+  border-top-left-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  border: 1px solid #ebebeb;
+}
+
+/* Kiểu bong bóng cho tin nhắn user */
+.modern-message-row.user .modern-message-bubble {
+  background: #e7ab3c;
+  color: #ffffff;
+  border-top-right-radius: 2px;
+  box-shadow: 0 2px 6px rgba(231, 171, 60, 0.2);
+}
+
+/* Hiệu ứng chấm nhảy khi bot đang trả lời */
+.loading-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 18px !important;
+}
+
+/* Mỗi dấu chấm trong animation loading */
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  background: #e7ab3c;
+  border-radius: 50%;
+  /*
+    animation: chatbotBounce 1.4s infinite ease-in-out both;
+    - chatbotBounce: tên keyframes animation
+    - 1.4s: thời lượng mỗi lần chạy
+    - infinite: chạy lặp mãi
+    - ease-in-out: bắt đầu chậm, giữa nhanh, kết thúc chậm
+    - both: giữ trạng thái đầu/cuối nếu cần
+  */
+  animation: chatbotBounce 1.4s infinite ease-in-out both;
+}
+
+/* Định thời gian nhảy khác nhau cho từng chấm */
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+/* Định nghĩa keyframe cho hiệu ứng nhảy */
+@keyframes chatbotBounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+}
+
+/* Thanh cuộn sản phẩm gợi ý trong chatbot */
+.chatbot-products-carousel {
+  display: flex !important;
+  gap: 12px !important;
+  overflow-x: auto !important;
+  padding: 8px 10px 12px 42px !important;
+  scroll-behavior: smooth;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Thanh cuộn ngang cho carousel sản phẩm */
+.chatbot-products-carousel::-webkit-scrollbar {
+  height: 4px;
+}
+
+/* Thumb cho thanh cuộn ngang */
+.chatbot-products-carousel::-webkit-scrollbar-thumb {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+/* Thẻ sản phẩm nhỏ trong carousel */
+.chatbot-product-card {
+  flex: 0 0 135px !important;
+  background: #ffffff !important;
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  text-decoration: none !important;
+  color: #333333 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Hiệu ứng hover cho thẻ sản phẩm */
+.chatbot-product-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.1) !important;
+  color: #111111 !important;
+}
+
+/* Khung chứa ảnh sản phẩm */
+.product-card-img-wrapper {
+  width: 100% !important;
+  height: 110px !important;
+  background-color: #f9f9f9 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border-bottom: 1px solid #f2f2f2 !important;
+}
+
+/* Ảnh sản phẩm trong thẻ */
+.product-card-img-wrapper img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Thông tin text trong thẻ sản phẩm */
+.product-card-info {
+  padding: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  flex-grow: 1 !important;
+}
+
+/* Tên sản phẩm trong thẻ */
+.product-card-name {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  height: 30px !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  color: #333333 !important;
+}
+
+/* Giá sản phẩm nhỏ */
+.product-card-price {
+  font-size: 11px !important;
+  color: #ff4d4f;
+  font-weight: 700 !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+/* Hành động / link thêm trên thẻ sản phẩm */
+.product-card-action {
+  font-size: 10px !important;
+  color: #e7ab3c !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-top: 1px dashed #ededed !important;
+  padding-top: 5px !important;
+}
