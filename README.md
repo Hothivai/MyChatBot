@@ -1,16 +1,64 @@
-# React + Vite
+# Chatbot Feature
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This document describes the chatbot feature in the `src/components/chatbot` folder. It explains the feature purpose, how it works, setup requirements, and where to change behavior.
 
-Currently, two official plugins are available:
+## Mục đích
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Chatbot là một trợ lý ảo bán hàng cho Fashionshop. Nó cho phép người dùng gõ câu hỏi, nhận câu trả lời bằng AI và xem sản phẩm liên quan trong kho hàng hiện tại.
 
-## React Compiler
+## Cấu trúc chính
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `Chatbot.jsx`
+  - Component chính quản lý trạng thái, danh sách tin nhắn, loading và mở/đóng chatbot.
+  - Kết nối UI với service xử lý API.
+- `chatbotPrompt.js`
+  - Chứa hệ thống prompt và schema trả về cho mô hình AI.
+  - Cung cấp hàm `getErrorMessage` để hiển thị thông báo lỗi thân thiện.
+- `chatbotService.js`
+  - Chứa logic gọi API Gemini từ Google Generative AI.
+  - Chuẩn hóa dữ liệu phản hồi và đảm bảo `link` sản phẩm đúng định dạng `#product-<id>`.
+- `components/ChatInput.jsx`
+  - Hiển thị trường nhập và nút gửi.
+- `components/MessageList.jsx`
+  - Hiển thị tin nhắn và danh sách sản phẩm trả về từ bot.
+- `components/ChatHeader.jsx`
+  - Hiển thị tiêu đề chatbot và nút đóng.
 
-## Expanding the ESLint configuration
+## Dữ liệu sản phẩm
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `productsData` được import từ `src/data/productsData.js`.
+- Bot sử dụng dữ liệu này để trả về sản phẩm phù hợp theo yêu cầu của người dùng.
+
+## Cài đặt môi trường
+
+Để chatbot hoạt động, cần cấu hình biến môi trường:
+
+```env
+VITE_GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+```
+
+Với Vite, biến phải được đặt trong file `.env` ở thư mục gốc.
+
+## Hành vi chính
+
+- Người dùng gõ câu hỏi vào ô nhập và nhấn gửi.
+- `Chatbot.jsx` gửi tin nhắn người dùng vào `sendChatbotMessage`.
+- `chatbotService.js` gọi model Gemini với prompt từ `chatbotPrompt.js`.
+- Bot phải trả về JSON gồm:
+  - `text`: câu trả lời
+  - `products`: mảng sản phẩm liên quan
+- `MessageList` hiển thị câu trả lời và hiển thị sản phẩm dưới dạng card.
+- Click vào sản phẩm sẽ cuộn trang đến phần tử có id tương ứng nếu tồn tại.
+
+## Mở rộng và chỉnh sửa
+
+- Để sửa quy tắc trả lời, cập nhật `buildSystemPrompt` trong `chatbotPrompt.js`.
+- Để thay đổi schema đầu ra, sửa `chatResponseSchema` trong `chatbotPrompt.js`.
+- Để thêm xử lý lỗi mới, mở rộng `getErrorMessage` trong `chatbotPrompt.js`.
+- Để chuyển sang mô hình AI khác, cập nhật `chatbotService.js` và `GEMINI_MODEL` tương ứng.
+
+## Lưu ý
+
+- Tính năng hiện tại chỉ hỗ trợ trả về sản phẩm liên quan trong kho hàng của Fashionshop.
+- Nếu người dùng hỏi ngoài phạm vi, bot sẽ trả lời từ chối nhẹ nhàng theo prompt quy định.
+- API key cần đúng và còn hạn để gọi được Gemini.
